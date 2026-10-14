@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "public": true,
+  "builds": [
+    {
+      "src": "frontend/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://aura-ai-backend-ldwh.onrender.com/api/$1"
+    },
+    {
+      "src": "/schema.sql",
+      "dest": "https://aura-ai-backend-ldwh.onrender.com/schema.sql"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
+  ]
+}

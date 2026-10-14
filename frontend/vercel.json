@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "public": true,
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://aura-ai-backend-ldwh.onrender.com/api/:path*"
+    },
+    {
+      "source": "/schema.sql",
+      "destination": "https://aura-ai-backend-ldwh.onrender.com/schema.sql"
+    }
+  ]
+}

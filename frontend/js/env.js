@@ -2,13 +2,16 @@
  * ============================================================================
  * FRONTEND ENVIRONMENT LOADER: env.js
  * ============================================================================
- * Bridges frontend/.env variables into the browser client environment.
+ * Bridges frontend environment variables into the browser client environment.
  */
 
 export const ENV = {
-  API_BASE_URL: window.location.origin,
-  SUPABASE_URL: '',
-  SUPABASE_ANON_KEY: '',
+  // Default to live Render backend in production / cloud deployments
+  API_BASE_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? window.location.origin
+    : 'https://aura-ai-backend-ldwh.onrender.com',
+  SUPABASE_URL: 'https://rivyzejondzoggnviayt.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpdnl6ZWpvbmR6b2dnbnZpYXl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5NDgxNzksImV4cCI6MjEwNzUyNDE3OX0.BbFPOlFyYXX5RLb6D-aln2TrLALjuLdW8hVx7mfagew',
   APP_NAME: 'AURA AI',
   APP_VERSION: '2.5.0',
   DEFAULT_THEME: 'dark',
@@ -31,7 +34,7 @@ export async function loadClientEnv() {
       if (data.soundEnabled !== undefined) ENV.ENABLE_SOUND = data.soundEnabled;
     }
   } catch (e) {
-    console.debug('[Env] Using default browser configuration');
+    console.debug('[Env] Using environment fallback config');
   }
   return ENV;
 }
