@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aura AI - Next-generation conversational artificial intelligence chatbot with intelligent personas, voice interaction, code generation, and ambient glassmorphic design.">
+  <title>AURA AI • Conversational Intelligence</title>
+  
+  <!-- Modern Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Client Styling -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/jpeg" href="assets/avatar.jpg">
+</head>
+<body>
+  <div class="app-container" id="app">
+    <!-- Ambient Background Lighting -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <!-- Mobile Overlay Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Left Sidebar: Conversations & Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-avatar-wrapper">
+            <img src="assets/avatar.jpg" alt="Aura Logo" class="brand-avatar">
+            <span class="status-indicator-dot"></span>
+          </div>
+          <div class="brand-text">
+            <h1 class="brand-name">AURA <span class="brand-badge">AI 2.5</span></h1>
+            <p class="brand-tagline">Cognitive Intelligence</p>
+          </div>
+        </div>
+        <button class="icon-btn close-sidebar-btn" id="closeSidebarBtn" title="Close sidebar" aria-label="Close sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Action Button: New Chat -->
+      <div class="sidebar-actions">
+        <button class="new-chat-btn" id="newChatBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          <span>New Conversation</span>
+          <kbd class="shortcut-badge">Ctrl K</kbd>
+        </button>
+      </div>
+
+      <!-- Persona Switcher -->
+      <div class="persona-section">
+        <div class="section-title-bar">
+          <span class="section-title">AI Persona</span>
+        </div>
+        <div class="persona-selector" id="personaSelector">
+          <button class="persona-tab active" data-persona="nexus" title="General conversational intelligence">
+            <span class="persona-icon">🧠</span>
+            <span class="persona-label">Nexus Core</span>
+          </button>
+          <button class="persona-tab" data-persona="coder" title="Senior software architect & debugging specialist">
+            <span class="persona-icon">💻</span>
+            <span class="persona-label">Architect</span>
+          </button>
+          <button class="persona-tab" data-persona="creative" title="Visionary copywriter & creative muse">
+            <span class="persona-icon">🎨</span>
+            <span class="persona-label">Creative</span>
+          </button>
+          <button class="persona-tab" data-persona="zen" title="Mindful, philosophical, and calm guide">
+            <span class="persona-icon">🧘</span>
+            <span class="persona-label">Zen Guide</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chat History Section -->
+      <div class="history-section">
+        <div class="section-title-bar">
+          <span class="section-title">Recent Chats</span>
+          <span class="history-count" id="historyCount">0</span>
+        </div>
+        <div class="history-list" id="historyList">
+          <!-- Dynamic conversation items rendered here -->
+        </div>
+      </div>
+
+      <!-- Database Sync Status Pill in Sidebar -->
+      <div class="db-status-pill-wrap">
+        <div class="db-status-pill" id="dbStatusPill">
+          <span class="db-status-indicator"></span>
+          <span class="db-status-text" id="dbStatusText">Checking Supabase...</span>
+        </div>
+      </div>
+
+      <!-- Sidebar Footer / Controls -->
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">
+            <span>U</span>
+          </div>
+          <div class="user-info">
+            <span class="user-name">Developer Guest</span>
+            <span class="user-tier">Supabase Enabled</span>
+          </div>
+        </div>
+        <div class="footer-actions">
+          <button class="icon-btn" id="settingsBtn" title="Settings & Supabase Configuration" aria-label="Settings">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Surface -->
+    <main class="main-chat" id="mainChat">
+      <!-- Top Navbar -->
+      <header class="chat-header">
+        <div class="header-left">
+          <button class="icon-btn mobile-menu-btn" id="openSidebarBtn" title="Toggle sidebar" aria-label="Open sidebar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12h18M3 6h18M3 18h18"/>
+            </svg>
+          </button>
+          
+          <div class="header-model-info">
+            <div class="model-badge">
+              <span class="pulse-beacon"></span>
+              <span class="model-name" id="currentModelDisplay">Nexus Core</span>
+            </div>
+            <span class="model-meta" id="modelMetaInfo">Backend Engine • Latency: &lt;15ms</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Voice audio toggle -->
+          <button class="icon-btn" id="soundToggleBtn" title="Toggle Sound FX" aria-label="Toggle sound effects">
+            <svg class="sound-on-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+            <svg class="sound-off-icon hidden" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <line x1="23" y1="9" x2="17" y2="15"/>
+              <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+          </button>
+
+          <!-- Export Chat -->
+          <button class="icon-btn" id="exportChatBtn" title="Export conversation as Markdown" aria-label="Export chat">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </button>
+
+          <!-- Clear active chat -->
+          <button class="icon-btn" id="clearChatBtn" title="Clear current messages" aria-label="Clear chat">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+          </button>
+
+          <!-- Dark/Light Theme Switcher -->
+          <button class="icon-btn theme-toggle-btn" id="themeToggleBtn" title="Toggle theme mode" aria-label="Toggle theme">
+            <svg class="sun-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="moon-icon hidden" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Message Body -->
+      <div class="chat-viewport" id="chatViewport">
+        <!-- Welcome Screen -->
+        <div class="welcome-container" id="welcomeScreen">
+          <div class="welcome-avatar-container">
+            <div class="avatar-glow-ring"></div>
+            <img src="assets/avatar.jpg" alt="Aura Logo" class="welcome-avatar">
+          </div>
+          
+          <h2 class="welcome-title">How can Aura assist you today?</h2>
+          <p class="welcome-subtitle">
+            Frontend Client connected to Node.js REST API with optional Supabase PostgreSQL sync.
+          </p>
+
+          <!-- Starter Prompt Cards -->
+          <div class="prompt-grid">
+            <div class="prompt-card" data-prompt="Write an optimized JavaScript debounce function with TypeScript definitions and clear usage examples.">
+              <div class="prompt-icon">⚡</div>
+              <div class="prompt-content">
+                <span class="prompt-heading">Code & Architect</span>
+                <p class="prompt-desc">Write an optimized JS debounce utility with TS types</p>
+              </div>
+              <span class="prompt-arrow">→</span>
+            </div>
+
+            <div class="prompt-card" data-prompt="Explain Quantum Computing and superposition to me using a simple coin flip analogy.">
+              <div class="prompt-icon">🔬</div>
+              <div class="prompt-content">
+                <span class="prompt-heading">Explain Concepts</span>
+                <p class="prompt-desc">Explain quantum computing using an intuitive analogy</p>
+              </div>
+              <span class="prompt-arrow">→</span>
+            </div>
+
+            <div class="prompt-card" data-prompt="Brainstorm 4 high-growth SaaS business ideas powered by autonomous AI agents in 2026.">
+              <div class="prompt-icon">💡</div>
+              <div class="prompt-content">
+                <span class="prompt-heading">Idea Generation</span>
+                <p class="prompt-desc">Brainstorm 4 autonomous AI startup concepts</p>
+              </div>
+              <span class="prompt-arrow">→</span>
+            </div>
+
+            <div class="prompt-card" data-prompt="Draft a persuasive executive email proposing a shift to modern micro-frontend architecture.">
+              <div class="prompt-icon">✍️</div>
+              <div class="prompt-content">
+                <span class="prompt-heading">Executive Writing</span>
+                <p class="prompt-desc">Draft a compelling architectural proposal email</p>
+              </div>
+              <span class="prompt-arrow">→</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Message List -->
+        <div class="messages-list" id="messagesList"></div>
+
+        <!-- Typing Loading Indicator -->
+        <div class="typing-indicator-row hidden" id="typingIndicator">
+          <div class="bot-avatar-tiny">
+            <img src="assets/avatar.jpg" alt="Aura">
+          </div>
+          <div class="typing-bubble">
+            <div class="typing-dots">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <span class="typing-label">Aura is synthesizing via Backend API...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Suggestion Chips Bar -->
+      <div class="suggestions-wrapper hidden" id="suggestionsWrapper">
+        <div class="suggestions-bar" id="suggestionsBar"></div>
+      </div>
+
+      <!-- Input Area & Compose Bar -->
+      <div class="compose-area">
+        <div class="compose-box">
+          <div class="attachment-preview hidden" id="attachmentPreview">
+            <span class="attachment-name" id="attachmentName">file.txt</span>
+            <button class="remove-attachment-btn" id="removeAttachmentBtn">&times;</button>
+          </div>
+
+          <div class="input-row">
+            <button class="icon-btn input-action-btn" id="attachFileBtn" title="Attach file or context" aria-label="Attach file">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+              </svg>
+            </button>
+            <input type="file" id="fileInputHidden" style="display:none;">
+
+            <textarea 
+              id="messageInput" 
+              class="message-textarea" 
+              placeholder="Ask anything or request code... (Shift + Enter for new line)"
+              rows="1"
+              maxlength="4000"
+              autocomplete="off"
+            ></textarea>
+
+            <button class="icon-btn input-action-btn voice-btn" id="voiceBtn" title="Voice Input (Speech-to-Text)" aria-label="Voice input">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+              <span class="voice-wave-ring"></span>
+            </button>
+
+            <button class="send-btn" id="sendBtn" title="Send message (Enter)" disabled aria-label="Send message">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="compose-disclaimer">
+          <span>Decoupled Architecture: Frontend UI connects to Node.js & Supabase PostgreSQL.</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Settings Modal -->
+    <div class="modal-backdrop hidden" id="settingsModal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <h3 class="modal-title">Settings & Database Configuration</h3>
+            <p class="modal-desc">Configure Supabase PostgreSQL, AI engine, and client preferences.</p>
+          </div>
+          <button class="icon-btn modal-close-btn" id="closeSettingsBtn" aria-label="Close settings">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <!-- 1. Supabase Connection Section -->
+          <div class="setting-group supabase-card">
+            <div class="supabase-card-header">
+              <div class="supabase-title-wrap">
+                <span class="supabase-brand-icon">⚡</span>
+                <div>
+                  <span class="setting-label" style="margin: 0;">Supabase PostgreSQL Database</span>
+                  <p class="setting-hint">Persist chats and messages in your Supabase cloud database.</p>
+                </div>
+              </div>
+              <span class="supabase-badge" id="modalSupabaseBadge">Checking...</span>
+            </div>
+
+            <div class="supabase-fields">
+              <label class="setting-sublabel" for="supabaseUrlInput">Project URL</label>
+              <input type="text" id="supabaseUrlInput" placeholder="https://your-project.supabase.co" class="modal-input">
+
+              <label class="setting-sublabel" for="supabaseKeyInput" style="margin-top: 8px;">Anon / Public API Key</label>
+              <div class="api-key-input-wrapper">
+                <input type="password" id="supabaseKeyInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." class="modal-input">
+                <button class="toggle-visibility-btn" id="toggleDbKeyVis">👁️</button>
+              </div>
+
+              <div class="supabase-actions-row">
+                <button class="btn-supabase-test" id="testSupabaseBtn">
+                  <span>Connect & Test Database</span>
+                </button>
+                <a href="/schema.sql" target="_blank" class="schema-link-btn" title="View PostgreSQL schema to run in Supabase SQL editor">
+                  📄 View SQL Schema
+                </a>
+              </div>
+              <p class="setting-hint" id="supabaseFeedbackMsg" style="margin-top: 6px;"></p>
+            </div>
+          </div>
+
+          <!-- 2. AI Intelligence Mode Section -->
+          <div class="setting-group">
+            <label class="setting-label">AI Intelligence Mode</label>
+            <div class="setting-options-grid">
+              <label class="radio-option">
+                <input type="radio" name="intelligenceMode" value="simulated" checked id="modeSimulated">
+                <div class="option-box">
+                  <span class="option-title">⚡ Backend Cognitive Engine</span>
+                  <span class="option-desc">Fast server model running inside Node.js. Zero API key needed.</span>
+                </div>
+              </label>
+
+              <label class="radio-option">
+                <input type="radio" name="intelligenceMode" value="gemini" id="modeGemini">
+                <div class="option-box">
+                  <span class="option-title">🌐 Live Gemini API</span>
+                  <span class="option-desc">Routes prompts to Google Gemini API via server proxy.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="setting-group hidden" id="apiKeySettingGroup">
+            <label class="setting-label" for="apiKeyInput">Gemini API Key</label>
+            <div class="api-key-input-wrapper">
+              <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API key (AIzaSy...)" class="modal-input">
+              <button class="toggle-visibility-btn" id="toggleApiKeyVis">👁️</button>
+            </div>
+            <p class="setting-hint">Passed securely in the request header to the backend proxy.</p>
+          </div>
+
+          <!-- 3. Typing Speed Select -->
+          <div class="setting-group">
+            <label class="setting-label" for="typingSpeedSelect">Typing Animation Speed</label>
+            <select id="typingSpeedSelect" class="modal-select">
+              <option value="fast">Ultra Fast (Instant)</option>
+              <option value="natural" selected>Natural Streaming (Recommended)</option>
+              <option value="slow">Dramatic Thought Pace</option>
+            </select>
+          </div>
+
+          <!-- 4. Text-To-Speech Toggle -->
+          <div class="setting-group">
+            <label class="setting-label">Text-To-Speech Auto Readout</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="autoSpeechToggle">
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Automatically speak bot responses</span>
+            </label>
+          </div>
+
+          <!-- 5. Data Management -->
+          <div class="setting-group danger-zone">
+            <label class="setting-label">Data Management</label>
+            <div class="danger-row">
+              <span>Permanently delete all stored chats and preferences</span>
+              <button class="danger-btn" id="clearAllDataBtn">Wipe All Data</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn-secondary" id="cancelSettingsBtn">Close</button>
+          <button class="btn-primary" id="saveSettingsBtn">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modular Frontend Scripts -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

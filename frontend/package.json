@@ -1,0 +1,9 @@
+{
+  "name": "aura-ai-frontend",
+  "version": "2.5.0",
+  "description": "Frontend client for Aura AI Chatbot",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "start": "node dev-server.js"
+  }
+}
