@@ -1,42 +1,44 @@
-# AURA AI — Full-Stack Conversational Intelligence with Supabase
+# AURA AI — Full-Stack Conversational Intelligence
 
-Aura AI is deployed with a **decoupled cloud architecture**:
-- **Backend API**: Hosted on [Render](https://render.com) with live Supabase PostgreSQL connection.
-- **Frontend Client**: Deployed on [Vercel](https://vercel.com) connecting to the Render API.
+Aura AI is live in production with a **decoupled cloud architecture**:
+- **Frontend Client**: Deployed on [Vercel](https://vercel.com)
+- **Backend API**: Deployed on [Render](https://render.com)
+- **Database**: Cloud PostgreSQL on [Supabase](https://supabase.com)
 
 ---
 
-## 🌐 Live Production Deployments
+## 🌐 Live Production URLs
 
-| Component | Cloud Host | Live URL | Status |
+| Tier | Platform | Production URL | Status |
 | :--- | :--- | :--- | :--- |
-| **Backend API** | Render | **[https://aura-ai-backend-ldwh.onrender.com](https://aura-ai-backend-ldwh.onrender.com)** | 🟢 **Live & Connected** |
-| **Render Dashboard** | Render | **[View on Render](https://dashboard.render.com/web/srv-db7h9sbbc2fs73f7i0n0)** | 🟢 Active |
-| **Database** | Supabase | **[https://rivyzejondzoggnviayt.supabase.co](https://rivyzejondzoggnviayt.supabase.co)** | 🟢 Active |
-| **Frontend** | Vercel | **Deploy via [vercel.com/new](https://vercel.com/new)** | 🚀 Ready |
+| **Frontend Web App** | **Vercel** | **[https://frontend-phi-dun-43.vercel.app](https://frontend-phi-dun-43.vercel.app)** | 🟢 **Live & Running** |
+| **Backend REST API** | **Render** | **[https://aura-ai-backend-ldwh.onrender.com](https://aura-ai-backend-ldwh.onrender.com)** | 🟢 **Live & Connected** |
+| **Database** | **Supabase** | **[https://rivyzejondzoggnviayt.supabase.co](https://rivyzejondzoggnviayt.supabase.co)** | 🟢 **Connected** |
+| **Vercel Project Dashboard** | Vercel | **[navadeep13/frontend](https://vercel.com/navadeep13/frontend/Aj9ne7MDtSrGDLtwUfSUgcqWPf4i)** | 🟢 Active |
+| **Render Service Dashboard** | Render | **[aura-ai-backend](https://dashboard.render.com/web/srv-db7h9sbbc2fs73f7i0n0)** | 🟢 Active |
 
 ---
 
-## 🚀 Deploy Frontend to Vercel (1-Click)
+## 🏛️ Full-Stack Communication Flow
 
-The repository includes [vercel.json](vercel.json) and [frontend/vercel.json](frontend/vercel.json) pre-configured with API proxying to Render:
-
-1. Open **[https://vercel.com/new](https://vercel.com/new)**.
-2. Select **`nikkalanavadeep-bit/test2`** and click **Import**.
-3. In **Root Directory**, select **`frontend`** (or leave root with the included `vercel.json`).
-4. Click **Deploy**.
-
-Alternatively, via terminal:
-```bash
-cd frontend
-npx vercel --prod
+```
+[ User in Browser ]
+        │
+        ▼
+[ Vercel Frontend ] ──> https://frontend-phi-dun-43.vercel.app
+        │
+        ▼ (Proxies /api/*)
+[ Render Backend ] ───> https://aura-ai-backend-ldwh.onrender.com
+        │
+        ▼
+[ Supabase Database ] ─> PostgreSQL (conversations & messages)
 ```
 
 ---
 
-## 📡 Live API Endpoints (Render)
+## 📡 Live API Endpoints
 
-- Healthcheck: `GET https://aura-ai-backend-ldwh.onrender.com/api/health`
-- Personas: `GET https://aura-ai-backend-ldwh.onrender.com/api/personas`
-- Chat Inference: `POST https://aura-ai-backend-ldwh.onrender.com/api/chat`
-- Database Schema: `GET https://aura-ai-backend-ldwh.onrender.com/schema.sql`
+- **Health Check**: `GET https://frontend-phi-dun-43.vercel.app/api/health`
+- **Personas**: `GET https://frontend-phi-dun-43.vercel.app/api/personas`
+- **Chat Inference**: `POST https://frontend-phi-dun-43.vercel.app/api/chat`
+- **Database Schema**: `GET https://frontend-phi-dun-43.vercel.app/schema.sql`
